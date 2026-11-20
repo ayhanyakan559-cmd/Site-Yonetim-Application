@@ -1,0 +1,27 @@
+{% extends "complex/base.html" %}
+{% block title %}Overdue dues{% endblock %}
+{% block content %}
+<h1>Overdue dues</h1>
+<div class="card">
+  <form method="get" class="inline">
+    <div><label>Block</label><select name="block"><option value="">All blocks</option>
+      {% for b in blocks %}<option value="{{ b.block_label }}" {% if b.block_label == block_filter %}selected{% endif %}>{{ b.block_label }}</option>{% endfor %}</select></div>
+    <div><label>Billing period</label><input type="month" name="period" value="{{ period_filter }}"></div>
+    <button type="submit" class="ghost">Filter</button>
+  </form>
+</div>
+<div class="card">
+  <div class="row-between"><h2>Units with overdue charges</h2><b>Total outstanding: TRY {{ grand_total|floatformat:"2g" }}</b></div>
+  <table>
+    <tr><th>Unit</th><th>Overdue charges</th><th class="num">Outstanding (TRY)</th></tr>
+    {% for row in rows %}
+    <tr>
+      <td><a href="{% url 'unit_detail' row.unit.pk %}">{{ row.unit }}</a></td>
+      <td class="small">{% for c in row.charges %}{{ c.period_label }} — due {{ c.due_date|date:"j M Y" }}, outstanding {{ c.outstanding_amount|floatformat:"2g" }}<br>{% endfor %}</td>
+      <td class="num"><b>{{ row.total|floatformat:"2g" }}</b></td>
+    </tr>
+    {% empty %}<tr><td colspan="3" class="muted">No overdue charges. 🎉</td></tr>{% endfor %}
+  </table>
+  <p class="small muted">Overdue means the outstanding amount is still above zero after the due date. The outstanding amount is always calculated from recorded payments.</p>
+</div>
+{% endblock %}

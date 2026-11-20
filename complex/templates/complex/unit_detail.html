@@ -1,0 +1,83 @@
+{% extends "complex/base.html" %}
+{% block title %}Unit {{ unit }}{% endblock %}
+{% block content %}
+<p class="small"><a href="{% url 'overview' %}">← Overview</a></p>
+<div class="row-between">
+  <h1>Unit {{ unit }} <span class="muted small">· Block {{ unit.block.block_label }}, floor {{ unit.floor_number }}</span></h1>
+  {% if active_residencies %}<span class="badge s-occupied">Occupied</span>{% else %}<span class="badge s-vacant">Vacant</span>{% endif %}
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <h2>Residents</h2>
+    <table>
+      <tr><th>Person</th><th>From</th><th>Until</th><th></th></tr>
+      {% for r in all_residencies %}
+      <tr>
+        <td>{{ r.person.full_name }}<br><span class="muted small">{{ r.person.telephone }} {{ r.person.email }}</span></td>
+        <td>{{ r.start_date|date:"j M Y" }}</td>
+        <td>{% if r.end_date %}{{ r.end_date|date:"j M Y" }}{% else %}—{% endif %}</td>
+        <td>
+          {% if r.current_state == "Active" %}
+            {% if r.end_date %}<span class="badge s-occupied">Active (ends {{ r.end_date|date:"j M Y" }})</span>{% endif %}
+            <details><summary class="small">Move out</summary>
+              <form method="post" action="{% url 'residency_end' r.pk %}" class="inline">{% csrf_token %}
+                <div><label>End date</label>{{ end_form.end_date }}</div><button class="sm" type="submit">End</button>
+              </form>
+              <span class="helptext">A residency becomes inactive the day after its end date (D04).</span>
+            </details>
+          {% elif r.current_state == "Upcoming" %}<span class="badge s-unpaid">Upcoming</span>
+          {% else %}<span class="badge s-ended">Ended</span>{% endif %}
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="4" class="muted">No residency records — the unit is vacant.</td></tr>{% endfor %}
+    </table>
+    <h3>Record residency</h3>
+    <form method="post" action="{% url 'residency_add' unit.pk %}" class="inline">{% csrf_token %}
+      <div><label>Person</label>{{ residency_form.person }}</div>
+      <div><label>Start date</label>{{ residency_form.start_date }}</div>
+      <div><label>End date (optional)</label>{{ residency_form.end_date }}</div>
+      <button type="submit">Add</button>
+    </form>
+    <p class="small muted">Need a new person? <a href="{% url 'people' %}">Register them first</a>.</p>
+  </div>
+
+  <div class="card">
+    <h2>Maintenance requests</h2>
+    <table>
+      <tr><th>Subject</th><th>By</th><th>Date</th><th>Status</th></tr>
+      {% for q in requests %}
+      <tr><td>{{ q.subject }}</td><td>{{ q.submitted_by }}</td><td>{{ q.submission_date|date:"j M Y" }}</td>
+          <td><span class="badge s-{{ q.status|slugify }}">{{ q.status }}</span></td></tr>
+      {% empty %}<tr><td colspan="4" class="muted">No requests.</td></tr>{% endfor %}
+    </table>
+    <p class="small"><a href="{% url 'requests' %}">Manage all requests →</a></p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Dues charges &amp; payments</h2>
+  <table>
+    <tr><th>Period</th><th>Due</th><th class="num">Amount</th><th class="num">Paid</th><th class="num">Outstanding</th><th>Status</th><th>Payments</th><th></th></tr>
+    {% for c in charges %}
+    <tr>
+      <td>{{ c.period_label }}</td>
+      <td>{{ c.due_date|date:"j M Y" }}</td>
+      <td class="num">{{ c.amount|floatformat:"2g" }}</td>
+      <td class="num">{{ c.paid_amount|floatformat:"2g" }}</td>
+      <td class="num"><b>{{ c.outstanding_amount|floatformat:"2g" }}</b></td>
+      <td><span class="badge s-{{ c.current_status|slugify }}">{{ c.current_status }}</span></td>
+      <td class="small">{% for p in c.payments.all %}{{ p.reference_number }}: {{ p.amount|floatformat:"2g" }} ({{ p.payment_date|date:"j M" }}, {{ p.method }}, {{ p.person }})<br>{% empty %}<span class="muted">—</span>{% endfor %}</td>
+      <td>{% if c.outstanding_amount > 0 %}<a class="btn sm" style="padding:4px 9px;font-size:13px" href="{% url 'payment_add' c.pk %}">Record payment</a>{% endif %}</td>
+    </tr>
+    {% empty %}<tr><td colspan="8" class="muted">No charges yet.</td></tr>{% endfor %}
+  </table>
+  <h3>Create monthly charge</h3>
+  <form method="post" action="{% url 'charge_add' unit.pk %}" class="inline">{% csrf_token %}
+    <div><label>Billing period</label>{{ charge_form.billing_period }}</div>
+    <div><label>Amount (TRY)</label>{{ charge_form.amount }}</div>
+    <div><label>Due date</label>{{ charge_form.due_date }}</div>
+    <button type="submit">Create charge</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "complex/base.html" %}
+{% block title %}Maintenance{% endblock %}
+{% block content %}
+<h1>Maintenance requests</h1>
+<div class="card">
+  <form method="get" class="inline">
+    <div><label>Status</label><select name="status"><option value="">All</option>
+      {% for s in statuses %}<option value="{{ s }}" {% if s == status_filter %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+    <div><label>Block</label><select name="block"><option value="">All blocks</option>
+      {% for b in blocks %}<option value="{{ b.block_label }}" {% if b.block_label == block_filter %}selected{% endif %}>{{ b.block_label }}</option>{% endfor %}</select></div>
+    <button type="submit" class="ghost">Filter</button>
+  </form>
+</div>
+<div class="card">
+  <table>
+    <tr><th>Date</th><th>Unit</th><th>Subject</th><th>Submitted by</th><th>Status</th><th>Update</th></tr>
+    {% for q in requests %}
+    <tr>
+      <td>{{ q.submission_date|date:"j M Y" }}</td>
+      <td><a href="{% url 'unit_detail' q.unit.pk %}">{{ q.unit }}</a></td>
+      <td><b>{{ q.subject }}</b><br><span class="small muted">{{ q.description }}</span></td>
+      <td>{{ q.submitted_by }}</td>
+      <td><span class="badge s-{{ q.status|slugify }}">{{ q.status }}</span></td>
+      <td>
+        <form method="post" action="{% url 'request_status' q.pk %}" class="inline">{% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <select name="status">{% for s in statuses %}<option value="{{ s }}" {% if s == q.status %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+          <button class="sm" type="submit">Save</button>
+        </form>
+      </td>
+    </tr>
+    {% empty %}<tr><td colspan="6" class="muted">No requests match.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

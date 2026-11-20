@@ -1,0 +1,22 @@
+{% extends "complex/base.html" %}
+{% block title %}Announcements{% endblock %}
+{% block content %}
+<h1>Announcements <span class="muted small">· {{ site.site_name }}</span></h1>
+<div class="grid g2">
+  <div class="card">
+    {% for a in announcements %}
+      <div class="ann"><b>{{ a.title }}</b> <span class="muted small">· {{ a.publication_date|date:"j M Y" }} · {{ a.author }}</span><p>{{ a.message }}</p></div>
+    {% empty %}<p class="muted">No announcements yet.</p>{% endfor %}
+  </div>
+  {% if form %}
+  <div class="card">
+    <h2>Publish announcement</h2>
+    <form method="post" class="stack">{% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}<div><label>{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}
+      <button type="submit">Publish to all residents</button>
+    </form>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

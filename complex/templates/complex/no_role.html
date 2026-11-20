@@ -1,0 +1,8 @@
+{% extends "complex/base.html" %}
+{% block content %}
+<div class="card">
+  <h1>No active role</h1>
+  <p>Your account is not linked to an active residency or management assignment.</p>
+  {% if not has_site %}<p class="muted">No site exists yet. Run <code>python manage.py seed_demo</code> to load the demo data.</p>{% endif %}
+</div>
+{% endblock %}

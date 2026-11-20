@@ -1,0 +1,51 @@
+{% extends "complex/base.html" %}
+{% block title %}My apartment{% endblock %}
+{% block content %}
+<h1>My apartment</h1>
+{% for u in units %}
+<div class="card">
+  <div class="row-between">
+    <h2>Unit {{ u.unit }} <span class="muted small">· {{ u.unit.site.site_name }} · floor {{ u.unit.floor_number }} · resident since {{ u.since|date:"j M Y" }}</span></h2>
+    <b>Outstanding balance: TRY {{ u.outstanding|floatformat:"2g" }}</b>
+  </div>
+  <table>
+    <tr><th>Period</th><th>Due</th><th class="num">Amount</th><th class="num">Paid</th><th class="num">Outstanding</th><th>Status</th><th>Recorded payments</th></tr>
+    {% for c in u.charges %}
+    <tr>
+      <td>{{ c.period_label }}</td><td>{{ c.due_date|date:"j M Y" }}</td>
+      <td class="num">{{ c.amount|floatformat:"2g" }}</td><td class="num">{{ c.paid_amount|floatformat:"2g" }}</td>
+      <td class="num"><b>{{ c.outstanding_amount|floatformat:"2g" }}</b></td>
+      <td><span class="badge s-{{ c.current_status|slugify }}">{{ c.current_status }}</span></td>
+      <td class="small">{% for p in c.payments.all %}{{ p.reference_number }}: TRY {{ p.amount|floatformat:"2g" }} on {{ p.payment_date|date:"j M Y" }} ({{ p.method }})<br>{% empty %}<span class="muted">—</span>{% endfor %}</td>
+    </tr>
+    {% empty %}<tr><td colspan="7" class="muted">No charges.</td></tr>{% endfor %}
+  </table>
+  <details><summary>Report a problem in {{ u.unit }}</summary>
+    <form method="post" action="{% url 'request_submit' u.unit.pk %}" class="stack" style="max-width:560px">{% csrf_token %}
+      <div><label>Subject</label>{{ request_form.subject }}</div>
+      <div><label>Description</label>{{ request_form.description }}</div>
+      <button type="submit">Submit request</button>
+    </form>
+  </details>
+</div>
+{% endfor %}
+
+<div class="grid g2">
+  <div class="card">
+    <h2>My maintenance requests</h2>
+    <table>
+      <tr><th>Date</th><th>Unit</th><th>Subject</th><th>Status</th></tr>
+      {% for q in my_requests %}
+      <tr><td>{{ q.submission_date|date:"j M Y" }}</td><td>{{ q.unit }}</td><td>{{ q.subject }}</td>
+          <td><span class="badge s-{{ q.status|slugify }}">{{ q.status }}</span></td></tr>
+      {% empty %}<tr><td colspan="4" class="muted">No requests yet.</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <div class="row-between"><h2>Latest announcements</h2><a class="small" href="{% url 'announcements' %}">All →</a></div>
+    {% for a in latest_announcements %}
+      <div class="ann"><b>{{ a.title }}</b> <span class="muted small">· {{ a.publication_date|date:"j M Y" }}</span><p>{{ a.message }}</p></div>
+    {% empty %}<p class="muted">No announcements.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

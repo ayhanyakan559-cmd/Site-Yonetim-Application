@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Site Yönetim{% endblock %} · Site Yönetim</title>
+  <style>
+    :root { --bg:#f4f6f8; --card:#fff; --ink:#1f2933; --muted:#616e7c; --line:#e4e7eb; --brand:#2f6f5e; --brand-2:#e8f3ef;
+            --red:#b42318; --red-bg:#fdecea; --amber:#9a6700; --amber-bg:#fff4d6; --green:#1a7f37; --green-bg:#e6f4ea; --blue:#1d4ed8; --blue-bg:#e8efff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); font-size:15px; }
+    a { color:var(--brand); }
+    header { background:var(--brand); color:#fff; }
+    header .wrap { display:flex; align-items:center; gap:24px; flex-wrap:wrap; padding:12px 20px; }
+    header .brand { font-weight:700; font-size:18px; color:#fff; text-decoration:none; }
+    header nav { display:flex; gap:4px; flex-wrap:wrap; flex:1; }
+    header nav a { color:#d9efe7; text-decoration:none; padding:6px 10px; border-radius:6px; }
+    header nav a:hover, header nav a.on { background:rgba(255,255,255,.15); color:#fff; }
+    header .who { font-size:13px; color:#d9efe7; display:flex; gap:10px; align-items:center; }
+    header .who button { background:transparent; border:1px solid #9fd0c0; color:#fff; padding:4px 10px; border-radius:6px; cursor:pointer; }
+    .wrap { max-width:1150px; margin:0 auto; }
+    main { padding:20px; }
+    h1 { font-size:24px; margin:4px 0 16px; } h2 { font-size:18px; margin:0 0 12px; } h3 { font-size:15px; margin:14px 0 8px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:16px; }
+    .grid { display:grid; gap:16px; } .g2 { grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); }
+    .g4 { grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); }
+    .stat { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+    .stat b { display:block; font-size:26px; } .stat span { color:var(--muted); font-size:13px; }
+    table { width:100%; border-collapse:collapse; } th, td { text-align:left; padding:8px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { font-size:12px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); font-weight:600; }
+    td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+    .muted { color:var(--muted); } .small { font-size:13px; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .s-settled, .s-resolved, .s-occupied { background:var(--green-bg); color:var(--green); }
+    .s-overdue { background:var(--red-bg); color:var(--red); }
+    .s-partially-paid, .s-in-progress { background:var(--amber-bg); color:var(--amber); }
+    .s-unpaid, .s-open { background:var(--blue-bg); color:var(--blue); }
+    .s-vacant, .s-ended { background:#eef0f2; color:var(--muted); }
+    .units { display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:8px; }
+    .unit { display:block; text-decoration:none; color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:8px; background:#fafbfc; }
+    .unit:hover { border-color:var(--brand); } .unit.occ { background:var(--brand-2); border-color:#b9dccf; }
+    .unit b { display:block; } .unit small { color:var(--muted); font-size:11px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    form.inline { display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
+    form.inline > div, form.inline p { margin:0; }
+    label { display:block; font-size:12px; color:var(--muted); margin-bottom:3px; font-weight:600; }
+    input, select, textarea { font:inherit; padding:7px 9px; border:1px solid #cbd2d9; border-radius:6px; background:#fff; max-width:100%; }
+    textarea { width:100%; } .stack > div { margin-bottom:10px; } .stack input, .stack select { width:100%; }
+    .helptext { display:block; font-size:12px; color:var(--muted); }
+    button, .btn { font:inherit; background:var(--brand); color:#fff; border:0; padding:8px 14px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-block; }
+    button.ghost, .btn.ghost { background:#fff; color:var(--brand); border:1px solid var(--brand); }
+    button.sm { padding:4px 9px; font-size:13px; }
+    .messages { list-style:none; padding:0; margin:0 0 16px; } .messages li { padding:10px 14px; border-radius:8px; margin-bottom:6px; }
+    .messages .success { background:var(--green-bg); color:var(--green); } .messages .error { background:var(--red-bg); color:var(--red); }
+    .messages .info { background:var(--blue-bg); color:var(--blue); }
+    ul.errorlist { color:var(--red); margin:4px 0; padding-left:18px; font-size:13px; }
+    .ann { border-left:3px solid var(--brand); padding:4px 0 4px 12px; margin-bottom:14px; }
+    .ann p { margin:6px 0 0; white-space:pre-line; }
+    .row-between { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+    details summary { cursor:pointer; color:var(--brand); font-weight:600; margin:6px 0; }
+    footer { text-align:center; color:var(--muted); font-size:12px; padding:20px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="{% url 'home' %}">🏢 Site Yönetim</a>
+    {% if user.is_authenticated %}
+    <nav>
+      {% if is_manager %}
+        <a href="{% url 'overview' %}">Overview</a>
+        <a href="{% url 'people' %}">People</a>
+        <a href="{% url 'debtors' %}">Overdue dues</a>
+        <a href="{% url 'requests' %}">Maintenance</a>
+        <a href="{% url 'assignments' %}">Managers</a>
+      {% endif %}
+      {% if is_resident %}<a href="{% url 'my_home' %}">My apartment</a>{% endif %}
+      {% if is_manager or is_resident %}<a href="{% url 'announcements' %}">Announcements</a>{% endif %}
+    </nav>
+    <div class="who">
+      <span>{{ current_person|default:user.username }}{% if is_manager %} · manager{% endif %}{% if is_resident %} · resident{% endif %}</span>
+      <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">Log out</button></form>
+    </div>
+    {% endif %}
+  </div>
+</header>
+<main class="wrap">
+  {% if messages %}<ul class="messages">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Residential Complex Management · demo version · all amounts in TRY · fictional data</footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends "complex/base.html" %}
+{% block title %}People{% endblock %}
+{% block content %}
+<h1>People</h1>
+<div class="grid g2">
+  <div class="card">
+    <table>
+      <tr><th>Name</th><th>Contact</th><th>Roles</th><th>Login</th></tr>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.person.full_name }}</td>
+        <td class="small">{{ row.person.telephone }}<br>{{ row.person.email }}</td>
+        <td>{% if row.is_manager %}<span class="badge s-in-progress">Manager</span> {% endif %}
+            {% for u in row.units %}<a class="badge s-occupied" href="{% url 'unit_detail' u.pk %}">Resident {{ u }}</a> {% endfor %}
+            {% if not row.is_manager and not row.units %}<span class="muted small">No active role</span>{% endif %}</td>
+        <td class="small">{% if row.person.user %}{{ row.person.user.username }}{% else %}<span class="muted">—</span>{% endif %}</td>
+      </tr>
+      {% empty %}<tr><td colspan="4" class="muted">No people yet.</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h2>Register person</h2>
+    <form method="post" class="stack">{% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <div><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}{{ field.errors }}</div>
+      {% endfor %}
+      <button type="submit">Register</button>
+    </form>
+    <p class="small muted">Contact details belong to the person, not to an apartment. Roles come from residencies and management assignments.</p>
+  </div>
+</div>
+{% endblock %}
