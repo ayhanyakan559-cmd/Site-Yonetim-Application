@@ -1,4 +1,8 @@
-"""Use-case operations that enforce business rules across several objects."""
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Use-case operations that enforce business rules across several objects.
+"""
 
 from decimal import Decimal
 

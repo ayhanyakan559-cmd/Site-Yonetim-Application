@@ -1,3 +1,9 @@
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Manager and resident views enforcing server-side role checks and ownership boundaries.
+"""
+
 from collections import OrderedDict
 from decimal import Decimal
 

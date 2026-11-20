@@ -1,5 +1,7 @@
 # Trello Board Setup — Site Yönetim Uygulaması
 
+**Live Board URL:** https://trello.com/b/TJRYcEA2/site-y%C3%B6netim-uygulamas%C4%B1-agile-sprint-board
+
 ## What the reference board contains
 https://trello.com/b/ZqN99gGN is Trello's public **"Agile Sprint Board" template**. I read it through its public JSON export. Its conventions:
 

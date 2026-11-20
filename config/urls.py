@@ -1,3 +1,9 @@
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Root URL configuration wiring admin, login/logout, and complex routes.
+"""
+
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path

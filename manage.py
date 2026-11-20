@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Django's command-line utility for administrative tasks.
+"""
 import os
 import sys
 

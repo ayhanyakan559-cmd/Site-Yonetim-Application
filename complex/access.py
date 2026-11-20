@@ -1,4 +1,8 @@
-"""Role helpers and access-control decorators (US01, US02)."""
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Role helpers and access-control decorators (US01, US02).
+"""
 
 from functools import wraps
 

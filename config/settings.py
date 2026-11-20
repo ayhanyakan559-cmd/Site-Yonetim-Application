@@ -1,4 +1,8 @@
-"""Django settings for the Site Yönetim Uygulaması demo (Residential Complex Management)."""
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Django settings for the Site Yönetim Uygulaması demo (Residential Complex Management).
+"""
 
 import importlib.util
 import os

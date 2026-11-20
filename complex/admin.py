@@ -1,3 +1,9 @@
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Django Admin registrations for the 10 residential complex domain models.
+"""
+
 from django.contrib import admin
 
 from .models import (

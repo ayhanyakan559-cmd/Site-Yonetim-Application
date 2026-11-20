@@ -1,18 +1,18 @@
 # Site Yönetim Uygulaması — Agile Project Documents
 
 **Project:** Residential Complex Management (Site Yönetim Uygulaması)
-**Course:** Object Oriented Analysis and Design — group assignment
+**Course:** CSE305 Software Engineering — Object Oriented Analysis and Design (Group Assignment)
 **Group members:** Ayhan Yakan (241805017) · Mustafa Ege Türker (241805034) · Nazife Kaya (241805082)
 **Process model chosen:** Agile (Scrum, tracked on Trello)
 **Source of truth:** *Problem domain description and conceptual UML model* (paragraphs D01–D09, Section 3 business rules, Section 6 fictional example)
 
-### Submission Links *(fill in once published)*
+### Submission Links
 
 | Resource | URL |
 |---|---|
-| Trello Sprint Board | `<paste public Trello board URL>` |
-| GitHub Repository | `<paste GitHub repo URL>` |
-| Live Demo URL | `<paste Render / PythonAnywhere URL>` |
+| Trello Sprint Board | https://trello.com/b/TJRYcEA2/site-y%C3%B6netim-uygulamas%C4%B1-agile-sprint-board |
+| GitHub Repository | https://github.com/ayhanyakan559-cmd/Site-Yonetim-Application |
+| Live Demo URL | https://site-yonetim-demo.onrender.com/ |
 
 > [!NOTE]
 > **Why Agile and not Unified Process:** the team wants a working **demo version first** and wants to refine it from feedback. The domain is small (10 concepts, 13 associations), with three people and a short timeline. Short sprints that each end in a working increment fit this better than UP's phase-based documents. Every user story below traces back to a domain paragraph (Dxx) or business rule (BRxx), so the analysis work from the PDF is kept.

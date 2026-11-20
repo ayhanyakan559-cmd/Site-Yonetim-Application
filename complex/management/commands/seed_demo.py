@@ -1,4 +1,8 @@
-"""Seed fictional demo data from PDF section 6 (US26)."""
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Seed fictional demo data from PDF section 6 (US26).
+"""
 
 from datetime import date
 from decimal import Decimal

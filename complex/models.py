@@ -1,8 +1,10 @@
-"""Domain model for Residential Complex Management.
-
-Each class maps 1:1 to a concept in the conceptual UML model (PDF section 4).
-Paragraph references (D01-D09) and business rules (BR01-BR14) point to the
-project documents.
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Domain model for Residential Complex Management.
+    Each class maps 1:1 to a concept in the conceptual UML model (PDF section 4).
+    Paragraph references (D01-D09) and business rules (BR01-BR14) point to the
+    project documents.
 """
 
 from datetime import date

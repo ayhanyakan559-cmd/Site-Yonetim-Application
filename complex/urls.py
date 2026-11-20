@@ -1,3 +1,9 @@
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : URL routing for manager, resident, and shared announcement views.
+"""
+
 from django.urls import path
 
 from . import views

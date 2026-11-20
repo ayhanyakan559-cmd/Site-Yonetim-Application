@@ -1,3 +1,9 @@
+"""
+Name(s) Surname(s) : Ayhan Yakan, Mustafa Ege Türker, Nazife Kaya
+Student No(s)#     : 241805017, 241805034, 241805082
+General Comments   : Automated tests covering business rules BR01-BR14, role access control, workflows, and seed_demo.
+"""
+
 from datetime import date, timedelta
 from decimal import Decimal
 from io import StringIO
